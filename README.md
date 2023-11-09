@@ -41,6 +41,7 @@ python Encryptor.py
 ```
 After that just follow the instruction
 
+Acknowledgement
 ------------
-
+Robin David and his LSB implementation. You can fine more here -> https://github.com/RobinDavid/LSB-Steganography/tree/master
 
