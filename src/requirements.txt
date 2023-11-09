@@ -1,0 +1,5 @@
+opencv-python
+docopt
+numpy
+cryptography
+fernet
