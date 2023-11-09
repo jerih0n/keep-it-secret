@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            main_command = int(input("Select action: \n 1) Encrypt \n 2) Decrypt \n 99) Exit"))
+            main_command = int(input("Select action: \n 1) Encrypt \n 2) Decrypt \n 99) Exit \n"))
             if main_command not in constants.VALID_MAIN_COMMANDS:
                 print(f"Unknown command {main_command}")
                 continue
@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            file_type_command = int(input("Select file type: \n 1) Image - .jpg \n 99) Exit"))
+            file_type_command = int(input("Select file type: \n 1) Image - .jpg \n 99) Exit \n"))
 
             if file_type_command not in constants.VALID_FILE_TYPE_COMMANDS:
                 print(f"Unknown command {main_command}")

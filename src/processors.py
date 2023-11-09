@@ -11,6 +11,7 @@ from steganography import Steganography
 class MainProcessor(object):
 
     def __init__(self):
+        self.encrypted_file_name = "encrypted.jpg"
         self.default_salt = b'YX,~pg3cP@QWU(w;>z&nH46'
         self.steganography_processor = Steganography()
         self.encryption_processor = EncryptionProcessor(self.default_salt)  # TODO: add configuration for custom salt
@@ -44,7 +45,10 @@ class MainProcessor(object):
             encrypted_message_as_byte_array = self.encryption_processor.encrypt_as_byte_array(phrase_to_encrypt, password_to_encrypt)
 
             # for now it supports only LSB (Least Significant Bit) technique
-            self.steganography_processor.embed_data_in_image_using_lsb_method(selected_valid_jpg_file_path, encrypted_message_as_byte_array, selected_target_destination_directory)
+
+            full_destination_path_and_file_name = os.path.join(selected_target_destination_directory, self.encrypted_file_name)
+
+            self.steganography_processor.embed_data_in_image_using_lsb_method(selected_valid_jpg_file_path, encrypted_message_as_byte_array, full_destination_path_and_file_name)
 
         except Exception as ex:
             print(F"Fatal Error. Encryption failed: Error Message: {str(ex)}")
@@ -56,7 +60,7 @@ class MainProcessor(object):
         password_to_decrypt = input(
             "Enter your password: " + '\033[93m' + "Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE! \n" + '\033[0m')
 
-        encrypted_byte_array_extracted = self.steganography_processor.extract_data_from_image_lsg_method(valid_jpg_file_path_of_image_to_decrypt)
+        encrypted_byte_array_extracted = self.steganography_processor.extract_data_from_image_using_lsb_method(valid_jpg_file_path_of_image_to_decrypt)
 
         decrypted_result = self.encryption_processor.decrypt_byte_array_to_original_string(password_to_decrypt, encrypted_byte_array_extracted)
 
@@ -87,6 +91,9 @@ class EncryptionProcessor(object) :
             password_as_byte = password.encode("utf-8")
             encrypted_text = ''.join([chr(int(binary, 2)) for binary in encrypted_byte_array])
             fernet = self._create_farnet(password_as_byte)
+
+            return fernet.decrypt(encrypted_text)
+
         except  Exception as ex:
             print(F"Decryption failed! Reason : {str(ex)}")
 
