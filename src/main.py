@@ -1,11 +1,8 @@
 import sys
-import constants
-import welcome
-
-from processors import MainProcessor
+from src.CoreLogic import constants, welcome
+from src.CoreLogic.Processors.main_processor import MainProcessor
 
 if __name__ == '__main__':
-
 
     welcome.welcome()
 
@@ -31,7 +28,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            file_type_command = int(input("Select file type: \n 1) Image - .jpg \n 99) Exit \n"))
+            file_type_command = int(input("Select file type: \n 1) Image - .png \n 99) Exit \n"))
 
             if file_type_command not in constants.VALID_FILE_TYPE_COMMANDS:
                 print(f"Unknown command {main_command}")
