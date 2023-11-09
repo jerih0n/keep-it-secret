@@ -26,7 +26,7 @@ class EncryptionProcessor(object):
 
             fernet = self._create_farnet(password_as_byte)
 
-            return fernet.decrypt(encrypted_as_string)
+            return fernet.decrypt(encrypted_as_string).decode("utf-8")
 
         except Exception as ex:
             print(F"Decryption failed! Reason : {str(ex)}")

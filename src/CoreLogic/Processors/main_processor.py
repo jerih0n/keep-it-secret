@@ -1,7 +1,6 @@
-
-from encryption_processor import EncryptionProcessor
-from user_input_processor import UserInputProcessor
-from steganography_processor import SteganographyProcessor
+from ..Processors.encryption_processor import EncryptionProcessor
+from ..Processors.user_input_processor import UserInputProcessor
+from ..Processors.steganography_processor import SteganographyProcessor
 import cv2
 import os
 
@@ -9,7 +8,7 @@ import os
 class MainProcessor(object):
 
     def __init__(self):
-        self.encrypted_file_name = "encrypted.jpg"
+        self.encrypted_file_name = "encrypted.png"
         self.default_salt = b'YX,~pg3cP@QWU(w;>z&nH46'
         self.encryption_processor = EncryptionProcessor(self.default_salt)  # TODO: add configuration for custom salt
 
@@ -17,7 +16,7 @@ class MainProcessor(object):
         if main_command_type == 1: # encrypt
             self._encrypt_png_image()
         if main_command_type == 2:
-            self._decrypt_jpg()
+            self._decrypt_png_image()
             return
 
     def _process_encryption_for_selected_file_type(self, file_command_type):
@@ -31,7 +30,7 @@ class MainProcessor(object):
         print('\033[93m' + "Warning! It's highly recommended to proceed with turned off internet connection for security reasons. You won't need it! \n " + '\033[0m')
         phrase_to_encrypt = input("Enter your phrase: ")
         print('\033[93m' + "Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE! \n" + '\033[0m')
-        password_to_encrypt = input("Enter your password:")
+        password_to_encrypt = input("Enter your password: ")
 
         selected_valid_png_file_path = UserInputProcessor.get_target_file_path()
 

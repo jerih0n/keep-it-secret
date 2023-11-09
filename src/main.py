@@ -1,6 +1,6 @@
 import sys
-from src.CoreLogic import constants, welcome
-from src.CoreLogic.Processors.main_processor import MainProcessor
+from CoreLogic import constants, welcome
+from CoreLogic.Processors.main_processor import MainProcessor
 
 if __name__ == '__main__':
 

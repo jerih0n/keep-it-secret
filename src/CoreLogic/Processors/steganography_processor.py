@@ -3,6 +3,8 @@ import numpy as np
 class SteganographyException(Exception):
     pass
 
+# original implementation by Robin Davis -> https://github.com/RobinDavid/LSB-Steganography
+
 class SteganographyProcessor(object):
     def __init__(self, im):
         self.image = im
