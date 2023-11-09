@@ -3,6 +3,7 @@ from ..Processors.user_input_processor import UserInputProcessor
 from ..Processors.steganography_processor import SteganographyProcessor
 import cv2
 import os
+from getpass import getpass
 
 
 class MainProcessor(object):
@@ -27,10 +28,8 @@ class MainProcessor(object):
     def _encrypt_png_image(self):
         # get the mnemonic phrase
 
-        print("Warning! It's highly recommended to proceed with turned off internet connection for security reasons. You won't need it!")
-        phrase_to_encrypt = input("Enter your phrase: ")
-        print("Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE!")
-        password_to_encrypt = input("Enter your password: ")
+        phrase_to_encrypt = input("Message to encrypt: ")
+        password_to_encrypt = getpass("Password: ")
 
         selected_valid_png_file_path = UserInputProcessor.get_target_file_path()
 
@@ -50,6 +49,10 @@ class MainProcessor(object):
 
             cv2.imwrite(full_destination_path_and_file_name, img_encoded)
 
+            print(F"Encrypted message successfully embedded to image {full_destination_path_and_file_name}")
+
+
+
         except Exception as ex:
             print(F"Fatal Error. Encryption failed: Error Message: {str(ex)}")
 
@@ -57,7 +60,8 @@ class MainProcessor(object):
         # extract the encrypted data from image
 
         valid_jpg_file_path_of_image_to_decrypt = UserInputProcessor.get_target_file_path()
-        password_to_decrypt = input("Enter your password: ")
+
+        password_to_decrypt = getpass("Password: ")
 
         steganography_processor = SteganographyProcessor(cv2.imread(valid_jpg_file_path_of_image_to_decrypt))
 

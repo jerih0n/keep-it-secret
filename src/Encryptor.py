@@ -1,11 +1,14 @@
+#!/usr/bin/env python
+# coding:UTF-8
+
 import sys
 from CoreLogic import constants, welcome
 from CoreLogic.Processors.main_processor import MainProcessor
 
+
 if __name__ == '__main__':
 
     welcome.welcome()
-
     selected_file_type = 0
     selected_main_command = 0
 
