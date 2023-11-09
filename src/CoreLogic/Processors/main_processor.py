@@ -27,9 +27,9 @@ class MainProcessor(object):
     def _encrypt_png_image(self):
         # get the mnemonic phrase
 
-        print('\033[93m' + "Warning! It's highly recommended to proceed with turned off internet connection for security reasons. You won't need it! \n " + '\033[0m')
+        print("Warning! It's highly recommended to proceed with turned off internet connection for security reasons. You won't need it!")
         phrase_to_encrypt = input("Enter your phrase: ")
-        print('\033[93m' + "Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE! \n" + '\033[0m')
+        print("Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE!")
         password_to_encrypt = input("Enter your password: ")
 
         selected_valid_png_file_path = UserInputProcessor.get_target_file_path()
@@ -57,8 +57,7 @@ class MainProcessor(object):
         # extract the encrypted data from image
 
         valid_jpg_file_path_of_image_to_decrypt = UserInputProcessor.get_target_file_path()
-        password_to_decrypt = input(
-            "Enter your password: " + '\033[93m' + "Warning! REMEMBER YOUR PASSWORD! WITHOUT IT YOU WON'T BE ABLE TO DECRYPT THE PHRASE! \n" + '\033[0m')
+        password_to_decrypt = input("Enter your password: ")
 
         steganography_processor = SteganographyProcessor(cv2.imread(valid_jpg_file_path_of_image_to_decrypt))
 
