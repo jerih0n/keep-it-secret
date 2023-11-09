@@ -8,10 +8,17 @@ from getpass import getpass
 
 class MainProcessor(object):
 
-    def __init__(self):
+    DEFAULT_SALT = 'CnS~x3e[H/!4=T"h<]@ML%f)`kAwqvKPG{_U;Vmj6(ZDt?RX'
+
+    def __init__(self, salt):
         self.encrypted_file_name = "encrypted.png"
-        self.default_salt = b'YX,~pg3cP@QWU(w;>z&nH46'
-        self.encryption_processor = EncryptionProcessor(self.default_salt)  # TODO: add configuration for custom salt
+        self.salt = ""
+        if salt is not None and salt != "":
+            self.salt = salt.encode("utf-8")
+        else:
+            self.salt = MainProcessor.DEFAULT_SALT.encode("utf-8")
+
+        self.encryption_processor = EncryptionProcessor(self.salt)  # TODO: add configuration for custom salt
 
     def process_action(self, main_command_type, file_command_type):
         if main_command_type == 1: # encrypt
@@ -70,7 +77,7 @@ class MainProcessor(object):
 
         decrypted_result = self.encryption_processor.decrypt_byte_array_to_original_string(password_to_decrypt, decoded_encrypted_message_as_string)
 
-        print(f"Phrase: \n {decrypted_result}")
+        print(f"decrypted message:  {decrypted_result}")
 
 
 

@@ -1,9 +1,19 @@
-#!/usr/bin/env python
-# coding:UTF-8
-
 import sys
 from CoreLogic import constants, welcome
 from CoreLogic.Processors.main_processor import MainProcessor
+from configparser import ConfigParser
+
+
+def read_config():
+    try:
+        parser = ConfigParser()
+        parser.read(r'config.ini')
+        configure_salt = parser.get("Security","salt")
+        return configure_salt
+    except Exception as ex:
+        print(ex)
+        return ""
+
 
 
 if __name__ == '__main__':
@@ -11,8 +21,8 @@ if __name__ == '__main__':
     welcome.welcome()
     selected_file_type = 0
     selected_main_command = 0
-
-    main_processor = MainProcessor()
+    salt = read_config()
+    main_processor = MainProcessor(salt)
 
     while True:
         try:
