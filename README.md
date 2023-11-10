@@ -3,7 +3,7 @@ Keep it sectrer
 
 Python program providing the abbility to embed an encrypted message into image file. Currently works only with .png file.
 
-This program uses steganography technique called least significant bit (LSB) and enhance it with security key. In a nutshell - a colour pixel is composed of red, green and blue, encoded on one byte. The idea is to store information in the first bit of every pixel's RGB component. In the worst case, the decimal value is different by one which is not visible to the human eye. In practice, if you don't have space to store all of your data in the first bit of every pixel you should start using the second bit, and so on. You have to keep in mind that the more your store data in an image, the more it can be detected. LSB however is a well known technique, and its vulnerable to steganography analysys. In order to enhance the security, the program applies a security key in a form of a salted password.
+This program uses steganography technique called least significant bit (LSB) and enhance it with security key. In a nutshell - a colour pixel is composed of red, green and blue, encoded on one byte. The idea is to store information in the first bit of every pixel's RGB component. In the worst case, the decimal value is different by one which is not visible to the human eye. In practice, if you don't have space to store all of your data in the first bit of every pixel you should start using the second bit, and so on. You have to keep in mind that the more your store data in an image, the more it can be detected. LSB however is a well known technique, and its vulnerable to steganography analysis. In order to enhance the security, the program applies a security key in a form of a salted password.
 
 
 Information
