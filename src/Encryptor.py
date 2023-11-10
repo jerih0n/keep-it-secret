@@ -5,14 +5,16 @@ from configparser import ConfigParser
 
 
 def read_config():
+    parser = ConfigParser()
     try:
         parser = ConfigParser()
         parser.read(r'config.ini')
-        configure_salt = parser.get("Security","salt")
-        return configure_salt
+        configure_salt = parser.get("Security", "salt")
+        pattern_repeat = int(parser.get("Security", "pattern_repeat"))
+        return configure_salt, pattern_repeat
     except Exception as ex:
-        print(ex)
-        return ""
+        print(f"Exception on attempting to configure the application with message: {ex}. Application will use default settings")
+        return "", 1
 
 
 
@@ -21,8 +23,8 @@ if __name__ == '__main__':
     welcome.welcome()
     selected_file_type = 0
     selected_main_command = 0
-    salt = read_config()
-    main_processor = MainProcessor(salt)
+    salt, pattern_repeat = read_config()
+    main_processor = MainProcessor(salt, pattern_repeat)
 
     while True:
         try:

@@ -10,15 +10,12 @@ class MainProcessor(object):
 
     DEFAULT_SALT = 'CnS~x3e[H/!4=T"h<]@ML%f)`kAwqvKPG{_U;Vmj6(ZDt?RX'
 
-    def __init__(self, salt):
+    def __init__(self, salt: str, pattern_repeat: int):
         self.encrypted_file_name = "encrypted.png"
-        self.salt = ""
-        if salt is not None and salt != "":
-            self.salt = salt.encode("utf-8")
-        else:
-            self.salt = MainProcessor.DEFAULT_SALT.encode("utf-8")
+        self.salt = self._handle_salt(salt)
+        self.pattern_repeat = pattern_repeat
 
-        self.encryption_processor = EncryptionProcessor(self.salt)  # TODO: add configuration for custom salt
+        self.encryption_processor = EncryptionProcessor(self.salt, self.pattern_repeat)
 
     def process_action(self, main_command_type, file_command_type):
         if main_command_type == 1: # encrypt
@@ -78,6 +75,16 @@ class MainProcessor(object):
         decrypted_result = self.encryption_processor.decrypt_byte_array_to_original_string(password_to_decrypt, decoded_encrypted_message_as_string)
 
         print(f"decrypted message:  {decrypted_result}")
+
+
+    def _handle_salt(self, salt: str):
+        if salt is not None and salt != "":
+            return salt.encode("utf-8")
+        else:
+            return MainProcessor.DEFAULT_SALT.encode("utf-8")
+
+
+
 
 
 

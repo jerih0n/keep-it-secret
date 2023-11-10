@@ -2,15 +2,17 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 import base64
-
+import hashlib
 
 class EncryptionProcessor(object):
 
-    def __init__(self, salt):
+    def __init__(self, salt: str, pattern_repeat: int):
         self.salt = salt
+        self.pattern_repeat = pattern_repeat
 
     def encrypt_as_string(self, phrase, password) -> object:
-        password_as_byte = password.encode("utf-8")
+
+        password_as_byte = self._get_enhanced_password(password, self.pattern_repeat)
         phrase_as_bite_array = phrase.encode("utf-8")
 
         fernet = self._create_farnet(password_as_byte)
@@ -22,7 +24,8 @@ class EncryptionProcessor(object):
 
     def decrypt_byte_array_to_original_string(self, password, encrypted_as_string) -> str:
         try:
-            password_as_byte = password.encode("utf-8")
+
+            password_as_byte = self._get_enhanced_password(password, self.pattern_repeat)
 
             fernet = self._create_farnet(password_as_byte)
 
@@ -45,3 +48,29 @@ class EncryptionProcessor(object):
         # Create a Fernet instance with the derived key
         fernet = Fernet(key)
         return  fernet
+
+
+    def _apply_complex_pattern(self, password_as_string: str, salt: str, pattern_repeat: int):
+        enhanced_password_pattern = ""
+        for i in range(0, pattern_repeat):
+
+            enhanced_password_pattern += str(f"{salt}_stack_sats_{password_as_string}")
+
+        return enhanced_password_pattern
+
+    def _apply_sha256(self, enhanced_password:str):
+        # Create a new SHA-256 hash object
+        sha256_hash_object = hashlib.sha256()
+
+        # Update the hash object with the bytes of the input string
+        sha256_hash_object.update(enhanced_password.encode('utf-8'))
+
+        # Get the hexadecimal representation of the hash
+        hashed_result = sha256_hash_object.hexdigest()
+
+        return hashed_result
+
+    def _get_enhanced_password(self, password:str, pattern_repeat: int):
+        enhanced_password_pattern = self._apply_complex_pattern(password, pattern_repeat)
+        sha256_as_string = self._apply_sha256(enhanced_password_pattern)
+        return sha256_as_string.encode("utf-8")
